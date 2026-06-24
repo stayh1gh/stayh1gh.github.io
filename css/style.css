@@ -1,0 +1,1733 @@
+/* ---------------------------------- */
+/* Tokens (from Figma)                */
+/* ---------------------------------- */
+
+:root {
+  --surface-main: #000000;
+  --surface-subtle: #111111;
+  --border-subtle: #383838;
+  --text-main: #ffffff;
+  --text-subtle: #b4b4b4;
+  --text-body: #cccccc;
+  --content-w: 1140px;
+  --pad: clamp(24px, 4vw, 48px);
+  --font-sans: "Plus Jakarta Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-logo: var(--font-sans);
+}
+
+/* Light theme — toggled via [data-theme="light"] on <html> */
+[data-theme="light"] {
+  --surface-main: #ffffff;
+  --surface-subtle: #f3f3f1;
+  --border-subtle: #e4e3df;
+  --text-main: #161616;
+  --text-subtle: #5f5f5f;
+  --text-body: #3f3f3f;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--surface-main);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Film-grain overlay — fixed, non-interactive noise over the whole viewport */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Pure white background in light mode — drop the grain overlay */
+[data-theme="light"] body::after {
+  display: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+
+.wrap {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+@media (min-width: 1236px) {
+  .wrap {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+/* ---------------------------------- */
+/* Navbar                             */
+/* ---------------------------------- */
+
+.navbar-zone {
+  padding-top: 32px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 12px;
+}
+
+
+.navbar .logo {
+  font-family: var(--font-logo);
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--text-main);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--text-main);
+  color: #000;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--text-subtle);
+}
+
+.btn--lg {
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.05em;
+  padding: 12px 24px;
+}
+
+/* ---------------------------------- */
+/* Hero                               */
+/* ---------------------------------- */
+
+.hero {
+  padding-top: clamp(60px, 10vh, 108px);
+  padding-bottom: 80px;
+}
+
+.headline {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: clamp(26px, 4.4vw, 48px);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+
+.headline .line {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.headline .line:last-child {
+  margin-bottom: 0;
+}
+
+.headline .cursor {
+  display: inline-block;
+  width: 0.3em;
+  height: 0.55em;
+  background: var(--border-subtle);
+  vertical-align: baseline;
+  margin: 0 0.22em;
+}
+
+.hero .byline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.hero .byline .sep {
+  width: 1px;
+  height: 14px;
+  background: #d9d9d9;
+}
+
+/* ---------------------------------- */
+/* Section headings                   */
+/* ---------------------------------- */
+
+.h2 {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: clamp(26px, 3vw, 36px);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-subtle);
+}
+
+/* ---------------------------------- */
+/* Work strip                         */
+/* ---------------------------------- */
+
+.work {
+  padding-block: 40px;
+}
+
+.work .h2 {
+  margin-bottom: 32px;
+}
+
+/* Pinned mode (desktop): the section is given extra height by JS, the
+   inner .work-pin sticks to the viewport, and vertical scroll progress
+   drives the strip's horizontal translation. */
+.work--pinned {
+  padding: 0;
+}
+
+.work--pinned .work-pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Auto cross-axis margins would shrink-center .wrap in the flex column */
+.work--pinned .work-pin > .wrap {
+  width: 100%;
+}
+
+.work--pinned .works {
+  overflow: visible;
+}
+
+/* Trailing spacer so the last card stops short of the right edge
+   (a flex item is counted in scrollWidth; trailing padding is not). */
+.work--pinned .works::after {
+  content: "";
+  flex: 0 0 clamp(20px, 5.6vw, 108px);
+}
+
+.work--pinned .work-card {
+  height: min(calc(100vh - 200px), 808px);
+  width: auto;
+}
+
+.works {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-left: clamp(20px, 5.6vw, 108px);
+  padding-right: clamp(20px, 5.6vw, 108px);
+  scrollbar-width: none;
+  will-change: transform;
+}
+
+.works::-webkit-scrollbar {
+  display: none;
+}
+
+.work-card {
+  position: relative;
+  flex-shrink: 0;
+  width: min(552px, 78vw);
+  aspect-ratio: 552 / 808;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--surface-subtle);
+  outline: none;
+}
+
+.work-card .media {
+  position: absolute;
+  inset: 0;
+}
+
+.work-card .media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.work-card:hover .media img {
+  transform: scale(1.03);
+}
+
+.tag {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  background: var(--surface-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+  line-height: 1.2;
+}
+
+/* Hover info bar — project name, description, year (Variant2 in Figma) */
+.work-card .info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: var(--surface-subtle);
+  border-top: 1px solid var(--border-subtle);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transform: translateY(101%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.work-card:hover .info,
+.work-card:focus-visible .info {
+  transform: translateY(0);
+}
+
+.work-card .info .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.work-card .info .name {
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.work-card .info .year {
+  font-size: 18px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.work-card .info .desc {
+  font-size: 14px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+}
+
+/* Touch devices have no hover — keep the info bar visible */
+@media (hover: none) {
+  .work-card .info {
+    transform: none;
+  }
+}
+
+/* Custom "View" cursor shown while hovering a work card */
+.has-view-cursor .work-card {
+  cursor: none;
+}
+
+.view-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  padding: 11px 22px;
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.5);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  will-change: left, top, transform;
+}
+
+.view-cursor.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ---------------------------------- */
+/* Placeholder media                  */
+/* ---------------------------------- */
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.placeholder span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.placeholder--dark {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 18px,
+      rgba(255, 255, 255, 0.02) 18px 36px
+    ),
+    var(--surface-subtle);
+}
+
+.placeholder--dark span {
+  color: var(--text-subtle);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 14px;
+}
+
+/* ---------------------------------- */
+/* Career                             */
+/* ---------------------------------- */
+
+.career {
+  padding-block: clamp(64px, 10vh, 120px) 64px;
+}
+
+.career .h2 {
+  margin-bottom: 48px;
+}
+
+.career-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.career-row:first-of-type {
+  padding-top: 0;
+}
+
+.career-row .who {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.career-row .logo-box {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.career-row .logo-box img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.career-row .logo-box.logo--full img {
+  width: 48px;
+  height: 48px;
+}
+
+.career-row .logo-box.logo--sm img {
+  width: 28px;
+  height: 28px;
+}
+
+/* Theme-aware monochrome logos via CSS mask (recolored per theme) */
+.career-row .logo-box .logo-mask {
+  display: block;
+  width: 34px;
+  height: 34px;
+  background-color: var(--text-main);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+/* Walmart spark keeps its gold in both light and dark modes */
+.career-row .logo-box.logo--walmart .logo-mask {
+  width: 32px;
+  background-color: #E1C15E;
+}
+
+/* Smartify icon is visually small — bump its mask size */
+.career-row .logo-box.logo--smartify .logo-mask {
+  background-color: var(--text-main);
+  width: 40px;
+  height: 40px;
+}
+
+/* Buzzfeed logo is visually large — pull it back */
+.career-row .logo-box.logo--buzzfeed img {
+  width: 26px;
+  height: 26px;
+}
+
+/* MillionPugs is brand yellow on dark, brand purple on light */
+.career-row .logo-box.logo--millionpugs .logo-mask {
+  background-color: #FFFF6F;
+}
+[data-theme="light"] .career-row .logo-box.logo--millionpugs .logo-mask {
+  background-color: #6F47F4;
+}
+
+/* The Walmart asset is an uncropped sprite sheet — replicate the
+   Figma crop that isolates the spark icon. */
+.career-row .logo-box.logo--walmart .crop {
+  position: relative;
+  width: 22px;
+  height: 24px;
+  overflow: hidden;
+}
+
+.career-row .logo-box.logo--walmart img {
+  position: absolute;
+  width: auto;
+  height: 40px;
+  max-width: none;
+  left: -86px;
+  top: -5.8px;
+}
+
+.career-row .meta .company {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+}
+
+.career-row .meta .sub {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+  font-size: 16px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+}
+
+.career-row .meta .sub .sep {
+  width: 1px;
+  height: 14px;
+  border-left: 1px solid var(--text-subtle);
+}
+
+.career-row .period {
+  flex-shrink: 0;
+  font-weight: 500;
+  font-size: clamp(16px, 1.6vw, 22px);
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+/* ---------------------------------- */
+/* Other works / gallery grid         */
+/* ---------------------------------- */
+
+.other-works {
+  padding-block: clamp(120px, 18vh, 200px) 80px;
+}
+
+.other-works .h2 {
+  margin-bottom: 48px;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.gallery .row {
+  display: flex;
+  gap: 18px;
+}
+
+.gallery .tile {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.gallery .tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery .tile--full {
+  height: clamp(220px, 50vw, 572px);
+}
+
+.gallery .row .tile--half {
+  height: clamp(180px, 50vw, 572px);
+}
+
+.gallery .row .tile--third {
+  height: clamp(110px, 32vw, 366px);
+}
+
+/* Natural tiles keep the image's own aspect ratio — nothing is cropped.
+   Extra specificity so fixed row heights (incl. responsive ones) never win. */
+.gallery .tile.tile--natural,
+.gallery .row .tile.tile--natural {
+  height: auto;
+}
+
+.gallery .tile--natural img {
+  height: auto;
+}
+
+/* Simple-layout project pages: breathing room before the footer */
+.project-head--simple {
+  padding-bottom: clamp(96px, 16vh, 180px);
+}
+
+a.tile:hover .placeholder span {
+  color: #000;
+}
+
+/* ---------------------------------- */
+/* Footer                             */
+/* ---------------------------------- */
+
+.footer {
+  position: relative;
+  margin-top: clamp(80px, 14vh, 180px);
+  padding: clamp(80px, 10vh, 130px) 0 clamp(56px, 7vh, 80px);
+}
+
+/* Larger dashed divider along the top of the footer */
+.footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--border-subtle) 0,
+    var(--border-subtle) 14px,
+    transparent 14px,
+    transparent 26px
+  );
+}
+
+.footer .cta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer .cta-row h2 {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: clamp(34px, 5vw, 64px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-main);
+}
+
+.footer .links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(40px, 7vw, 90px);
+  margin-top: clamp(56px, 7vh, 88px);
+}
+
+#social-links {
+  display: flex;
+  gap: clamp(40px, 7vw, 90px);
+}
+
+.footer-email {
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+  transition: color 0.2s ease;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.footer-email:hover {
+  color: var(--text-main);
+}
+
+.footer .links a {
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+  transition: color 0.2s ease;
+}
+
+.footer .links a:hover {
+  color: var(--text-main);
+}
+
+/* ---------------------------------- */
+/* Project detail page                */
+/* ---------------------------------- */
+
+.project-page .wrap--narrow {
+  max-width: var(--content-w);
+}
+
+.project-head {
+  padding-top: clamp(60px, 9vh, 104px);
+}
+
+.project-head h1 {
+  font-weight: 800;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+}
+
+.project-intro {
+  display: flex;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-top: 24px;
+  margin-bottom: clamp(48px, 7vw, 80px);
+}
+
+.project-intro .copy {
+  flex: 0 1 560px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-size: 20px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+}
+
+.project-facts {
+  flex-shrink: 0;
+  display: flex;
+  gap: 19px;
+  border-left: 1px dashed var(--border-subtle);
+  padding-left: 19px;
+  width: 128px;
+}
+
+.project-facts .col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.project-facts .value,
+.project-facts .list {
+  font-size: 16px;
+}
+
+.project-facts .group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-facts .label {
+  color: var(--text-subtle);
+}
+
+.project-facts .value,
+.project-facts .list {
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.project-facts .list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.back-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.back-link:hover {
+  color: var(--text-main);
+}
+
+.next-project {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.next-project .label {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+.next-project a {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: clamp(24px, 3.6vw, 44px);
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  transition: color 0.2s ease;
+}
+
+.next-project a:hover {
+  color: var(--text-subtle);
+}
+
+/* ---------------------------------- */
+/* Case study (rich project page)     */
+/* ---------------------------------- */
+
+/* Floating close button (project pages) — appears when scrolling stops */
+.close-fab {
+  position: fixed;
+  left: 50%;
+  bottom: 14px;
+  z-index: 9999;
+  background: color-mix(in srgb, var(--text-main) 16%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--text-main) 28%, transparent);
+  color: var(--text-main);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: 999px;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50%);
+  transition: background 0.2s ease;
+}
+
+.close-fab:hover {
+  background: color-mix(in srgb, var(--text-main) 28%, transparent);
+}
+
+.cs-hero {
+  margin-top: clamp(40px, 6vw, 72px);
+}
+
+.cs-figure {
+  margin: 0;
+}
+
+.cs-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
+
+/* Light stroke on every image across the project pages */
+.project-page .cs-figure img,
+.project-page .gallery .tile {
+  border: 1px solid var(--border-subtle);
+}
+
+.cs-figure figcaption {
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+}
+
+.cs-figure--hero img {
+  border-radius: 12px;
+}
+
+/* Tall/portrait image — centered and constrained */
+.cs-figure--narrow {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Two-column section: heading on the left, body content on the right. */
+.cs-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 5vw, 80px);
+  align-items: start;
+  padding: clamp(56px, 9vh, 104px) 0;
+}
+
+.cs-h {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+
+.cs-col-body {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.cs-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-size: 20px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--text-body);
+}
+
+/* All section images, collected and stacked at the end of the page. */
+.cs-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 4vw, 48px);
+  padding: clamp(8px, 2vw, 24px) 0 clamp(36px, 6vh, 64px);
+}
+
+/* My role */
+.cs-role {
+  padding-bottom: clamp(96px, 16vh, 180px);
+}
+
+.cs-skills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cs-skills li {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  color: var(--text-subtle);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-subtle);
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+
+.cs-role-who {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.cs-role-avatar {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+}
+
+/* Process phases ("Plan of attack") — four filled squares, 2x2 */
+.cs-phases {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+
+.cs-phase {
+  background: var(--surface-subtle);
+  border-radius: 16px;
+  padding: clamp(20px, 2.5vw, 28px);
+}
+
+.cs-phase-title {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--text-main);
+  margin-bottom: 14px;
+}
+
+.cs-phase ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cs-phase li {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-subtle);
+}
+
+/* Pull quote */
+.cs-quote {
+  margin: 0 0 24px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  color: var(--text-main);
+  border-left: 2px solid var(--border-subtle);
+  padding-left: clamp(20px, 3vw, 32px);
+}
+
+/* Outcome stats ("Aftermath") */
+.cs-stats-note {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+}
+
+/* One rounded card holding the three stats side by side */
+.cs-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: clamp(16px, 2vw, 32px);
+  row-gap: 10px;
+  background: var(--surface-subtle);
+  border-radius: 16px;
+  padding: clamp(28px, 3.5vw, 44px) clamp(24px, 3vw, 40px);
+}
+
+/* Dissolve the stat wrapper so values land in row 1 and labels in row 2 */
+.cs-stat { display: contents; }
+
+.cs-stat-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: clamp(32px, 3.5vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  grid-row: 1;
+  align-self: end;
+}
+
+.cs-stat-label {
+  font-size: 16px;
+  color: var(--text-subtle);
+  white-space: nowrap;
+  grid-row: 2;
+  align-self: start;
+}
+
+@media (max-width: 860px) {
+  /* Stack the two-column sections vertically: heading above body */
+  .cs-section {
+    grid-template-columns: 1fr;
+    gap: clamp(16px, 3vw, 24px);
+  }
+}
+
+@media (max-width: 720px) {
+  .cs-phases {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------------------------------- */
+/* Responsive                         */
+/* ---------------------------------- */
+
+@media (max-width: 720px) {
+  .project-intro {
+    flex-direction: column;
+  }
+
+  /* Facts go full-width with a dashed rule on top, Year and Disciplines
+     side by side (two columns) instead of stacked. */
+  .project-facts {
+    width: auto;
+    border-left: none;
+    border-top: 1px dashed var(--border-subtle);
+    padding-left: 0;
+    padding-top: 28px;
+  }
+  .project-facts .col {
+    flex-direction: row;
+    gap: clamp(24px, 8vw, 56px);
+    font-size: 14px;
+  }
+  .project-facts .group { gap: 10px; }
+  /* Year only needs its content width; Disciplines takes the rest so the
+     two-word disciplines stay on one line each. */
+  .project-facts .group:first-child { flex: 0 0 auto; }
+  .project-facts .group:last-child { flex: 1; }
+  .project-facts .value,
+  .project-facts .list {
+    font-size: 18px;
+  }
+  .project-facts .list span { white-space: nowrap; }
+
+  /* Stats card: stack vertically on mobile so long labels never overflow */
+  .cs-stats {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    gap: 0;
+  }
+  .cs-stat {
+    display: block;
+    margin-bottom: clamp(20px, 5vw, 28px);
+  }
+  .cs-stat:last-child { margin-bottom: 0; }
+  .cs-stat-label { margin-top: 8px; }
+
+  /* Gallery images keep their rounded corners but get a little inset from
+     the screen edges instead of bleeding full-width. */
+  .cs-gallery {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  /* Mobile career list: no avatars, company + role on one horizontal line */
+  .career-row {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .career-row .who { gap: 0; align-items: baseline; }
+  .career-row .logo-box { display: none; }
+  .career-row .meta {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .career-row .meta .company { font-size: 18px; }
+  .career-row .meta .sub { margin-top: 0; font-size: 15px; }
+  /* Keep only the role — hide the separator and location */
+  .career-row .meta .sub .sep,
+  .career-row .meta .sub span:last-child { display: none; }
+  /* Drop the year/period on mobile */
+  .career-row .period { display: none; }
+
+  .gallery .row {
+    flex-direction: column;
+  }
+
+  .gallery .row .tile--half,
+  .gallery .row .tile--third {
+    height: clamp(180px, 56vw, 366px);
+  }
+
+  .footer .links {
+    margin-top: 40px;
+  }
+}
+
+/* ============================================ */
+/* 2026 redesign — overrides (loaded last, wins) */
+/* ============================================ */
+
+/* Navbar → sticky pill */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 0;
+  padding-block: 16px;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* Full-bleed bar behind the constrained navbar content — black in dark, white in light */
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  background: var(--surface-main);
+  z-index: -1;
+}
+
+.navbar .logo {
+  font-family: var(--font-sans);
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--text-main);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.theme-toggle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.theme-toggle:hover { opacity: 0.6; }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+/* Button → pill, theme-aware, not uppercase */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--text-main);
+  color: var(--surface-main);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: -0.015em;
+  text-transform: none;
+  height: 56px;
+  padding: 0 24px;
+  border-radius: 100px;
+  transition: opacity 0.2s ease;
+}
+
+.btn:hover { background: var(--text-main); opacity: 0.85; }
+
+.btn--lg {
+  font-size: 15px;
+  line-height: 24px;
+  height: 56px;
+  padding: 0 28px;
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 40px;
+}
+
+.hero-inner {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+  padding-block: 80px 40px;
+}
+
+.hero-title {
+  font-weight: 700;
+  font-size: clamp(40px, 6.2vw, 80px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text-main);
+}
+
+.hero-lead {
+  max-width: 1040px;
+  font-weight: 500;
+  font-size: clamp(24px, 3.6vw, 48px);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: var(--text-main);
+}
+
+.hero-note {
+  font-weight: 300;
+  font-size: clamp(18px, 2.2vw, 28px);
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.scroll-cue {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  color: var(--text-main);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+}
+
+.scroll-cue-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] .scroll-cue-icon { background: rgba(0, 0, 0, 0.06); }
+
+/* Section headings */
+.h2 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+
+/* Work → featured cards */
+.work {
+  padding-block: clamp(120px, 22vh, 260px) 0;
+  --card-h: min(clamp(480px, 60vw, 660px), calc(100vh - 260px));
+}
+
+/* Title scrolls normally with more breathing room before the cards */
+.work .h2 {
+  margin-bottom: clamp(40px, 6vh, 72px);
+  padding: 8px 0;
+}
+
+/* Scroll-space wrapper — JS sets height to n × 100vh */
+.feature-stack-wrap {
+  position: relative;
+}
+
+/* Sticky stage pins to the viewport and holds BOTH the title and the cards,
+   so the title stays next to the cards through the whole stacking scroll.
+   Height fits the content so there's no large gap before the next section. */
+.feature-stage {
+  position: sticky;
+  top: 84px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* Title sits at the top of the stage, in normal flow */
+.feature-stage > .h2 {
+  flex: 0 0 auto;
+  margin: 0 0 clamp(20px, 3vh, 32px);
+  padding: 8px 0;
+}
+
+/* Card area holds the absolutely-stacked cards; sized to the cards plus
+   top headroom (for peeking) and a little bottom breathing room. */
+.feature-stack-wrap .feature-list {
+  position: relative;
+  flex: 0 0 auto;
+  display: block;
+  height: calc(100px + var(--card-h) + 120px);
+}
+
+.feature-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.feature {
+  display: block;
+  height: var(--card-h, clamp(440px, 56vw, 604px));
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--card-bg, var(--surface-subtle));
+  color: var(--card-fg, var(--text-main));
+  box-shadow: 0 8px 48px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.06);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+/* Cards stack absolutely; top headroom (≥ max peek) keeps the
+   shrunken/peeking cards from being clipped at the stage edge, and the
+   height is capped to the available space so the front card always fits. */
+.feature-stack-wrap .feature {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  margin: 0 auto;
+  width: 100%;
+  height: var(--card-h);
+}
+
+.feature-copy {
+  position: absolute;
+  left: clamp(24px, 3vw, 40px);
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  width: min(360px, 56%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.feature-logo { height: 40px; width: auto; }
+
+.feature-text { display: flex; flex-direction: column; gap: 8px; }
+
+.feature-title {
+  font-weight: 600;
+  font-size: clamp(34px, 4.4vw, 56px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.feature-tagline {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  max-width: 320px;
+  opacity: 0.92;
+}
+
+.feature-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  background: #000;
+  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.015em;
+  padding: 0 26px;
+  border-radius: 100px;
+  transition: transform 0.2s ease;
+}
+
+.feature:hover .feature-btn { transform: translateX(3px); }
+
+.feature-media {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 64%;
+}
+
+.feature-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.feature:hover .feature-media img { transform: scale(1.03); }
+
+/* Full-bleed feature cards: the whole card is one exported image, with just
+   the "Learn more" button overlaid in the same style as the other cards. */
+.feature--full { overflow: hidden; }
+.feature--full .feature-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.feature--full:hover .feature-bg { transform: scale(1.03); }
+.feature--full .feature-btn {
+  position: absolute;
+  left: clamp(24px, 3vw, 40px);
+  top: 56%;
+  z-index: 2;
+}
+
+/* Full-bleed background image with written copy overlaid on the left
+   (the image itself fades to the card colour behind the text). */
+.feature--bg { overflow: hidden; }
+.feature--bg .feature-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.feature--bg .feature-copy {
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Phone-mockup feature cards: written copy on the left, a phone screen that
+   bleeds off the bottom-right edge of the card. */
+.feature--phone .feature-copy {
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.feature-tags {
+  position: absolute;
+  left: clamp(24px, 3vw, 40px);
+  bottom: clamp(24px, 3vw, 40px);
+  z-index: 2;
+  display: flex;
+  gap: clamp(20px, 3vw, 32px);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--card-fg, var(--text-main));
+  opacity: 0.92;
+}
+.feature-media--phone {
+  width: 50%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  pointer-events: none;
+}
+.feature-media--phone img {
+  width: auto;
+  height: 88%;
+  max-width: 96%;
+  object-fit: contain;
+  object-position: bottom center;
+  align-self: flex-end;
+}
+
+/* Screen-mockup feature cards: written copy on the left, a wide UI screen that
+   bleeds off the right edge of the card. */
+.feature--screen .feature-copy {
+  bottom: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.feature-media--screen {
+  width: 56%;
+  right: clamp(24px, 3vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  pointer-events: none;
+}
+.feature-media--screen img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: left center;
+}
+
+/* Other stuff I made — rounded tiles */
+.gallery .tile { border-radius: 16px; }
+
+/* Other stuff I made — heading */
+#other-works .h2 {
+  font-family: "IBM Plex Sans Condensed", "Plus Jakarta Sans", sans-serif;
+  font-size: 32px;
+  text-transform: lowercase;
+}
+
+/* Footer links → full-strength text */
+.footer .links a { color: var(--text-main); }
+.footer .links a:hover { opacity: 0.6; color: var(--text-main); }
+
+/* Mobile: no stack animation — cards list vertically (see image-1 layout).
+   The copy wrapper is dissolved with display:contents so the logo, text, tags,
+   media and button reorder into a single column. */
+@media (max-width: 760px) {
+  .feature-list { gap: 56px; }
+
+  .feature {
+    position: static;
+    top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: clamp(580px, 82vh, 720px);
+    min-height: 0;
+    margin-bottom: 0;
+    padding: 32px 24px 28px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.14);
+    transform-origin: center center;
+    filter: none;
+    animation: none;
+    will-change: transform, opacity;
+  }
+
+  .feature-copy {
+    display: contents;
+  }
+
+  .feature-logo { order: 1; height: 32px; margin-bottom: 18px; flex-shrink: 0; }
+  .feature-text { order: 2; gap: 10px; flex-shrink: 0; }
+
+  .feature-tags {
+    order: 3;
+    position: static;
+    left: auto;
+    bottom: auto;
+    margin-top: 18px;
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+  /* Media fills the leftover space so every card is the same height */
+  .feature-media {
+    order: 4;
+    position: static;
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-top: 28px;
+  }
+
+  .feature-btn {
+    order: 5;
+    align-self: stretch;
+    justify-content: center;
+    margin-top: 28px;
+    flex-shrink: 0;
+  }
+
+  /* Phone mockup — whole device, centered, fills the media height */
+  .feature-media--phone {
+    justify-content: center;
+    align-items: center;
+  }
+  .feature-media--phone img {
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Wide UI screen — full width, bleeding to the card edges */
+  .feature-media--screen {
+    right: auto;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% + 48px);
+    margin-left: -24px;
+    margin-right: -24px;
+  }
+  .feature-media--screen img {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    border-radius: 0;
+  }
+}
